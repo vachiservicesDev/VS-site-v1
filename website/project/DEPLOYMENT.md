@@ -23,8 +23,17 @@
 ## 📋 Deployment Options
 
 ### Option 1: Vercel (Recommended)
+
+#### Quick Deploy (Automated):
 ```bash
-# Install Vercel CLI
+# Run the automated deployment script (installs Vercel CLI if needed)
+cd website/project
+./deploy.sh
+```
+
+#### Manual Deploy:
+```bash
+# Install Vercel CLI (if not already installed)
 npm install -g vercel
 
 # Deploy to Vercel
