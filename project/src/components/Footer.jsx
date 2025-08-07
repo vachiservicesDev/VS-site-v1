@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { 
   MapPin, 
   Phone, 
@@ -11,30 +12,64 @@ import {
 function Footer() {
   const currentYear = new Date().getFullYear()
 
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  }
+
   return (
-    <footer className="bg-gray-900 text-white py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#4CAF50] to-[#1B4B8F] rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-[#2563eb] to-purple-500 rounded-full blur-2xl"></div>
+      </div>
+      
+      <motion.div 
+        className="container mx-auto px-4 relative z-10"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={staggerContainer}
+      >
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
+          variants={staggerContainer}
+        >
           {/* Company Info */}
-          <div>
-            <img 
+          <motion.div variants={fadeInUp}>
+            <motion.img 
               src="/Transparent-logo.png" 
               alt="Vachi Services LLC" 
-              className="h-12 w-auto mb-4 brightness-0 invert"
+              className="h-14 w-auto mb-6 brightness-0 invert"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             />
-            <p className="text-gray-300 mb-4 leading-relaxed">
+            <p className="text-gray-300 mb-6 leading-relaxed text-lg">
               AI-First Consulting. Enterprise-Grade Delivery. Boutique Excellence.
             </p>
             <div className="text-sm text-gray-400">
-              <p className="font-medium text-white mb-1">Founded 2022</p>
-              <p>US-Based Team</p>
+              <p className="font-semibold text-white mb-2 text-base">Founded 2022</p>
+              <p className="text-gray-300">US-Based Team</p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Quick Links</h3>
-            <ul className="space-y-3">
+          <motion.div variants={fadeInUp}>
+            <h3 className="text-2xl font-bold mb-8 text-white">Quick Links</h3>
+            <ul className="space-y-4">
               {[
                 { name: 'Home', path: '/' },
                 { name: 'About Us', path: '/about' },
@@ -42,24 +77,28 @@ function Footer() {
                 { name: 'Technology Stack', path: '/technology' },
                 { name: 'Careers', path: '/careers' },
                 { name: 'Contact', path: '/contact' }
-              ].map((link) => (
-                <li key={link.name}>
+              ].map((link, index) => (
+                <motion.li 
+                  key={link.name}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <Link 
                     to={link.path} 
-                    className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300 flex items-center group"
+                    className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300 flex items-center group text-lg focus-2025"
                   >
                     {link.name}
-                    <ArrowRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+                    <ArrowRight className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300" />
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Our Services</h3>
-            <ul className="space-y-3">
+          <motion.div variants={fadeInUp}>
+            <h3 className="text-2xl font-bold mb-8 text-white">Our Services</h3>
+            <ul className="space-y-4">
               {[
                 'Salesforce Implementation',
                 'AI & Cloud Projects',
@@ -67,94 +106,141 @@ function Footer() {
                 'Strategic Consulting',
                 'Data Integration',
                 'Security & Compliance'
-              ].map((service) => (
-                <li key={service}>
-                  <span className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300 cursor-pointer">
+              ].map((service, index) => (
+                <motion.li 
+                  key={service}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <span className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300 cursor-pointer text-lg">
                     {service}
                   </span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact Info */}
-          <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Contact Info</h3>
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <MapPin className="w-5 h-5 text-[#4CAF50] mr-3 mt-0.5 flex-shrink-0" />
-                <div className="text-gray-300">
+          <motion.div variants={fadeInUp}>
+            <h3 className="text-2xl font-bold mb-8 text-white">Contact Info</h3>
+            <div className="space-y-6">
+              <motion.div 
+                className="flex items-start group"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <MapPin className="w-6 h-6 text-[#4CAF50] mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <div className="text-gray-300 text-lg">
                   <p>83 Wooster Heights Rd,</p>
                   <p>Suite 125, Danbury, CT 06810</p>
                 </div>
-              </div>
+              </motion.div>
               
-              <div className="flex items-center">
-                <Phone className="w-5 h-5 text-[#4CAF50] mr-3 flex-shrink-0" />
+              <motion.div 
+                className="flex items-center group"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Phone className="w-6 h-6 text-[#4CAF50] mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                 <a 
                   href="tel:+16124238425" 
-                  className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300"
+                  className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300 text-lg focus-2025"
                 >
                   +1 (612) 423-8425
                 </a>
-              </div>
+              </motion.div>
               
-              <div className="flex items-center">
-                <Mail className="w-5 h-5 text-[#4CAF50] mr-3 flex-shrink-0" />
+              <motion.div 
+                className="flex items-center group"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Mail className="w-6 h-6 text-[#4CAF50] mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                 <a 
                   href="mailto:info@vachiservices.com" 
-                  className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300"
+                  className="text-gray-300 hover:text-[#4CAF50] transition-colors duration-300 text-lg focus-2025"
                 >
                   info@vachiservices.com
                 </a>
-              </div>
+              </motion.div>
               
-              <div className="flex items-start">
-                <Clock className="w-5 h-5 text-[#4CAF50] mr-3 mt-0.5 flex-shrink-0" />
-                <div className="text-gray-300">
+              <motion.div 
+                className="flex items-start group"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Clock className="w-6 h-6 text-[#4CAF50] mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                <div className="text-gray-300 text-lg">
                   <p>Monday - Friday</p>
                   <p>9:00 AM - 5:00 PM EST</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
+        <motion.div 
+          className="mt-16 pt-10 border-t border-gray-700"
+          variants={fadeInUp}
+        >
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
+            <motion.div 
+              className="text-gray-400 text-base mb-6 md:mb-0"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
               <p>&copy; {currentYear} Vachi Services LLC. All rights reserved.</p>
-            </div>
+            </motion.div>
             
-            <div className="flex items-center space-x-6">
+            <motion.div 
+              className="flex items-center space-x-6"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
               <a 
                 href="https://www.linkedin.com/company/vachiservicesllc/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-[#4CAF50] transition-colors duration-300 flex items-center group"
+                className="text-gray-400 hover:text-[#4CAF50] transition-colors duration-300 flex items-center group focus-2025"
               >
-                <Linkedin className="w-5 h-5 mr-2" />
-                <span className="text-sm">Follow us on LinkedIn</span>
-                <ArrowRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+                <Linkedin className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-base">Follow us on LinkedIn</span>
+                <ArrowRight className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300" />
               </a>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* CTA Section */}
-        <div className="mt-8 p-6 bg-gradient-to-r from-[#1B4B8F] to-[#2563eb] rounded-2xl text-center">
-          <h4 className="text-xl font-bold mb-2">Ready to Transform Your Business?</h4>
-          <p className="text-gray-200 mb-4">Schedule your free strategy session today</p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center bg-[#4CAF50] hover:bg-[#4CAF50]/90 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
-          >
-            Schedule Free Strategy Session
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Link>
-        </div>
-      </div>
+        {/* Enhanced CTA Section */}
+        <motion.div 
+          className="mt-12 p-8 glass-card gradient-primary rounded-3xl text-center shadow-2025-large relative overflow-hidden"
+          variants={fadeInUp}
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Background Effects */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#4CAF50]/20 rounded-full blur-xl"></div>
+          
+          <div className="relative z-10">
+            <h4 className="text-2xl font-bold mb-4">Ready to Transform Your Business?</h4>
+            <p className="text-gray-200 mb-6 text-lg">Schedule your free strategy session today</p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/contact"
+                className="inline-flex items-center gradient-secondary hover:shadow-2025-large text-white px-8 py-4 rounded-full font-semibold transition-all duration-500 transform shadow-2025-medium hover-lift focus-2025"
+              >
+                Schedule Free Strategy Session
+                <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
+              </Link>
+            </motion.div>
+          </div>
+        </motion.div>
+      </motion.div>
     </footer>
   )
 }
