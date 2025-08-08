@@ -191,7 +191,7 @@ function Footer() {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
-              <p>&copy; {currentYear} Vachi Services LLC. All rights reserved.</p>
+              <p>&copy; 2022 Vachi Services LLC. All rights reserved.</p>
             </motion.div>
             
             <motion.div 
