@@ -222,35 +222,6 @@ function Footer() {
             </motion.div>
           </div>
         </motion.div>
-
-        {/* Enhanced CTA Section */}
-        <motion.div 
-          className="mt-12 p-8 glass-card gradient-primary rounded-3xl text-center shadow-2025-large relative overflow-hidden"
-          variants={fadeInUp}
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.3 }}
-        >
-          {/* Background Effects */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#4CAF50]/20 rounded-full blur-xl"></div>
-          
-          <div className="relative z-10">
-            <h4 className="text-2xl font-bold mb-4">Ready to Transform Your Business?</h4>
-            <p className="text-gray-200 mb-6 text-lg">Schedule your free strategy session today</p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/contact"
-                className="inline-flex items-center gradient-secondary hover:shadow-2025-large text-white px-8 py-4 rounded-full font-semibold transition-all duration-500 transform shadow-2025-medium hover-lift focus-2025"
-              >
-                Schedule Free Strategy Session
-                <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform duration-300" />
-              </Link>
-            </motion.div>
-          </div>
-        </motion.div>
       </motion.div>
     </footer>
   )
