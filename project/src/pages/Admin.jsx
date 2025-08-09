@@ -2,18 +2,16 @@ import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Plus, Trash2, Save, LogOut, Lock, Briefcase } from 'lucide-react'
 
-const DEFAULT_PASSWORD = 'admin123'
+const ADMIN_EMAIL = 'admin@vachiservices.com'
+const ADMIN_PASSWORD = 'PR@vi2517726'
 
 function Admin() {
   const [isAuthed, setIsAuthed] = useState(false)
+  const [emailInput, setEmailInput] = useState('')
   const [passwordInput, setPasswordInput] = useState('')
   const [heroTitle, setHeroTitle] = useState('')
   const [heroSubtitle, setHeroSubtitle] = useState('')
   const [jobs, setJobs] = useState([])
-
-  const storedPassword = useMemo(() => {
-    return localStorage.getItem('adminPassword') || DEFAULT_PASSWORD
-  }, [])
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
@@ -32,11 +30,11 @@ function Admin() {
 
   function handleLogin(e) {
     e.preventDefault()
-    if (passwordInput === storedPassword) {
+    if (emailInput.trim().toLowerCase() === ADMIN_EMAIL && passwordInput === ADMIN_PASSWORD) {
       localStorage.setItem('adminToken', 'ok')
       setIsAuthed(true)
     } else {
-      alert('Invalid password')
+      alert('Invalid email or password')
     }
   }
 
@@ -87,6 +85,16 @@ function Admin() {
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                value={emailInput}
+                onChange={e => setEmailInput(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B4B8F]"
+                placeholder="admin@vachiservices.com"
+              />
+            </div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <input
                 type="password"
@@ -99,7 +107,6 @@ function Admin() {
             <button type="submit" className="w-full gradient-secondary text-white px-4 py-3 rounded-full font-semibold shadow-2025-medium hover:shadow-2025-large transition-all">
               Login
             </button>
-            <p className="text-xs text-gray-500">Default password is "admin123". You can change it in localStorage (`adminPassword`).</p>
           </form>
         </motion.div>
       </div>
