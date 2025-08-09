@@ -209,14 +209,14 @@ function Footer() {
                 <span className="text-base">Follow us on LinkedIn</span>
                 <ArrowRight className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300" />
               </a>
-              <Link
-                to="/admin"
+              <a
+                href="/admin"
                 className="inline-flex items-center gradient-secondary hover:shadow-2025-large text-white px-6 py-3 rounded-full font-semibold transition-all duration-500 transform shadow-2025-medium hover-lift focus-2025"
               >
                 <LogIn className="w-5 h-5 mr-2" />
                 <span className="text-base">Login</span>
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-              </Link>
+              </a>
             </motion.div>
           </div>
         </motion.div>
