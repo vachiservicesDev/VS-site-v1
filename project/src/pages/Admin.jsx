@@ -53,7 +53,18 @@ function Admin() {
   function addJob() {
     setJobs(prev => [
       ...prev,
-      { id: crypto.randomUUID(), title: '', department: '', location: '', description: '' }
+      {
+        id: crypto.randomUUID(),
+        title: '',
+        department: '',
+        location: '',
+        type: '',
+        salary: '',
+        description: '',
+        responsibilities: [],
+        requirements: [],
+        benefits: []
+      }
     ])
   }
 
@@ -66,7 +77,18 @@ function Admin() {
         title: j.title || '',
         department: j.department || '',
         location: j.location || '',
-        description: j.description || ''
+        type: j.type || '',
+        salary: j.salary || '',
+        description: j.description || '',
+        responsibilities: Array.isArray(j.responsibilities)
+          ? j.responsibilities
+          : (j.responsibilities ? String(j.responsibilities).split(/\r?\n/).map(s => s.trim()).filter(Boolean) : []),
+        requirements: Array.isArray(j.requirements)
+          ? j.requirements
+          : (j.requirements ? String(j.requirements).split(/\r?\n/).map(s => s.trim()).filter(Boolean) : []),
+        benefits: Array.isArray(j.benefits)
+          ? j.benefits
+          : (j.benefits ? String(j.benefits).split(/\r?\n/).map(s => s.trim()).filter(Boolean) : [])
       }))
       setJobs(normalized)
     } catch {
@@ -75,7 +97,12 @@ function Admin() {
         title: j.title || '',
         department: j.department || '',
         location: j.location || '',
-        description: j.description || ''
+        type: j.type || '',
+        salary: j.salary || '',
+        description: j.description || '',
+        responsibilities: Array.isArray(j.responsibilities) ? j.responsibilities : [],
+        requirements: Array.isArray(j.requirements) ? j.requirements : [],
+        benefits: Array.isArray(j.benefits) ? j.benefits : []
       }))
       setJobs(normalized)
     }
@@ -83,6 +110,11 @@ function Admin() {
 
   function updateJob(id, field, value) {
     setJobs(prev => prev.map(j => j.id === id ? { ...j, [field]: value } : j))
+  }
+
+  function updateJobLines(id, field, value) {
+    const lines = String(value).split(/\r?\n/).map(s => s.trim()).filter(Boolean)
+    setJobs(prev => prev.map(j => j.id === id ? { ...j, [field]: lines } : j))
   }
 
   function removeJob(id) {
@@ -204,20 +236,40 @@ function Admin() {
                 <div key={job.id} className="p-4 rounded-xl border border-gray-200">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs text-gray-500">Title</label>
+                      <label className="block text-xs text-gray-500">Job Title</label>
                       <input value={job.title} onChange={e => updateJob(job.id, 'title', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500">Department</label>
-                      <input value={job.department} onChange={e => updateJob(job.id, 'department', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" />
+                      <label className="block text-xs text-gray-500">Type of Role (Department)</label>
+                      <input value={job.department || ''} onChange={e => updateJob(job.id, 'department', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" />
                     </div>
                     <div>
                       <label className="block text-xs text-gray-500">Location</label>
-                      <input value={job.location} onChange={e => updateJob(job.id, 'location', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" />
+                      <input value={job.location || ''} onChange={e => updateJob(job.id, 'location', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-500">Employment Type (Full-time / Part-time)</label>
+                      <input value={job.type || ''} onChange={e => updateJob(job.id, 'type', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="Full-time, Part-time, Contract, Internship" />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-500">Salary</label>
+                      <input value={job.salary || ''} onChange={e => updateJob(job.id, 'salary', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" placeholder="$120k - $160k" />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-xs text-gray-500">Description</label>
-                      <textarea value={job.description} onChange={e => updateJob(job.id, 'description', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" rows={3} />
+                      <label className="block text-xs text-gray-500">Role Summary (Description)</label>
+                      <textarea value={job.description || ''} onChange={e => updateJob(job.id, 'description', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" rows={3} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-xs text-gray-500">Responsibilities (one per line)</label>
+                      <textarea value={Array.isArray(job.responsibilities) ? job.responsibilities.join('\n') : (job.responsibilities || '')} onChange={e => updateJobLines(job.id, 'responsibilities', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" rows={4} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-xs text-gray-500">Requirements (one per line)</label>
+                      <textarea value={Array.isArray(job.requirements) ? job.requirements.join('\n') : (job.requirements || '')} onChange={e => updateJobLines(job.id, 'requirements', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" rows={4} />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-xs text-gray-500">Benefits & Perks (one per line)</label>
+                      <textarea value={Array.isArray(job.benefits) ? job.benefits.join('\n') : (job.benefits || '')} onChange={e => updateJobLines(job.id, 'benefits', e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2" rows={4} />
                     </div>
                   </div>
                   <div className="mt-3 flex justify-end">
