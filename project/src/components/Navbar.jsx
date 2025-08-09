@@ -89,10 +89,9 @@ function Navbar() {
                 href="https://vs-self-services-portal.vercel.app/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-3 rounded-full text-gray-700 hover:text-[#1B4B8F] hover:bg-white/50 transition-all duration-300 font-semibold relative group focus-2025"
+                className="inline-flex items-center gradient-secondary hover:shadow-2025-large text-white px-5 py-2.5 rounded-full font-semibold transition-all duration-500 transform shadow-2025-medium hover-lift focus-2025"
               >
                 <span className="relative z-10">myVachi</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1B4B8F]/10 to-[#4CAF50]/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
             </motion.div>
           </div>
@@ -155,11 +154,10 @@ function Navbar() {
                   href="https://vs-self-services-portal.vercel.app/login"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block px-4 py-3 rounded-full text-gray-700 hover:text-[#1B4B8F] hover:bg-white/50 transition-all duration-300 font-semibold relative group focus-2025"
+                  className="block gradient-secondary hover:shadow-2025-large text-white px-4 py-3 rounded-full font-semibold transition-all duration-500 transform shadow-2025-medium hover-lift focus-2025"
                   onClick={() => setIsOpen(false)}
                 >
                   <span className="relative z-10">myVachi</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#1B4B8F]/10 to-[#4CAF50]/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </a>
               </motion.div>
             </div>
