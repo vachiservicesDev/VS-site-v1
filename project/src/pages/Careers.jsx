@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { 
   Users, 
@@ -26,7 +26,7 @@ import {
   Plane,
   Shield
 } from 'lucide-react'
-import { jobs } from '../data/jobs'
+import { jobs as defaultJobs } from '../data/jobs'
 
 function Careers() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -35,6 +35,25 @@ function Careers() {
   const [expandedJob, setExpandedJob] = useState(null)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [expandedFAQ, setExpandedFAQ] = useState(null)
+  const [overrideJobs, setOverrideJobs] = useState(null)
+  const [heroTitle, setHeroTitle] = useState('Join the Future of ')
+  const [heroEmphasis, setHeroEmphasis] = useState('AI-Powered Consulting')
+  const [heroSubtitle, setHeroSubtitle] = useState("Shape the future of technology with the industry's brightest minds")
+
+  useEffect(() => {
+    try {
+      const storedJobs = localStorage.getItem('adminJobs')
+      if (storedJobs) setOverrideJobs(JSON.parse(storedJobs))
+    } catch {}
+    const storedTitle = localStorage.getItem('careerTitle')
+    const storedSubtitle = localStorage.getItem('careerSubtitle')
+    if (storedTitle) {
+      setHeroTitle(storedTitle.replace(/<em>.?<\/em>/g, ''))
+    }
+    if (storedSubtitle) setHeroSubtitle(storedSubtitle)
+  }, [])
+
+  const jobs = overrideJobs && Array.isArray(overrideJobs) && overrideJobs.length > 0 ? overrideJobs : defaultJobs
 
   const testimonials = [
     {
@@ -192,10 +211,11 @@ function Careers() {
         >
           <motion.div className="max-w-4xl mx-auto text-center" variants={fadeInUp}>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Join the Future of <span className="text-[#4CAF50]">AI-Powered Consulting</span>
+              {heroTitle}
+              <span className="text-[#4CAF50]">{heroEmphasis}</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200">
-              Shape the future of technology with the industry's brightest minds
+              {heroSubtitle}
             </p>
             
             <div className="flex flex-wrap justify-center gap-6 text-sm mb-8">

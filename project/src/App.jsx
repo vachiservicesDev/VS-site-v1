@@ -7,6 +7,7 @@ import Services from './pages/Services'
 import Technology from './pages/Technology'
 import Careers from './pages/Careers'
 import Contact from './pages/Contact'
+import Admin from './pages/Admin'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/technology" element={<Technology />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
       <Footer />
