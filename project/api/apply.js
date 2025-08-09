@@ -13,7 +13,7 @@ function parseMultipart(req) {
     const fields = {}
     const attachments = []
     let totalBytes = 0
-    const MAX_BYTES = 4 * 1024 * 1024 // 4MB total
+    const MAX_BYTES = 12 * 1024 * 1024 // 12MB total across all files
 
     busboy.on('field', (name, val) => {
       fields[name] = val

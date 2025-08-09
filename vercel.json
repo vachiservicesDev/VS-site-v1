@@ -5,6 +5,10 @@
       "src": "project/package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "dist" }
+    },
+    {
+      "src": "project/api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
