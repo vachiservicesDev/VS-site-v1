@@ -13,7 +13,7 @@ function parseMultipart(req) {
     const fields = {}
     const attachments = []
     let totalBytes = 0
-    const MAX_BYTES = 12 * 1024 * 1024 // 12MB total across all files
+    const MAX_BYTES = 4 * 1024 * 1024 // 4MB total across all files (free tier friendly)
 
     busboy.on('field', (name, val) => {
       fields[name] = val
@@ -75,6 +75,7 @@ export default async function handler(req, res) {
       expectedSalary = '',
       noticePeriod = '',
       earliestStartDate = '',
+      privacyConsent = 'false',
     } = fields
 
     if (!fullName || !email) {
@@ -120,6 +121,7 @@ export default async function handler(req, res) {
       `Expected Salary: ${expectedSalary}`,
       `Notice Period: ${noticePeriod}`,
       `Earliest Start Date: ${earliestStartDate}`,
+      `Privacy Consent: ${privacyConsent === 'true' ? 'Yes' : 'No'}`,
       '',
       `Skills: ${skills}`,
       '',
@@ -143,7 +145,7 @@ export default async function handler(req, res) {
         text: `New application: ${role || 'General'} — ${fullName}`,
         blocks: [
           { type: 'section', text: { type: 'mrkdwn', text: `*New Job Application*\n*Role:* ${role || 'General'} (${department})\n*Applicant:* ${fullName}\n*Email:* ${email}\n*Phone:* ${phone || '-'}\n*LinkedIn:* ${linkedInUrl || '-'}\n*GitHub:* ${githubUrl || '-'}\n*Portfolio:* ${portfolioUrl || '-'}` } },
-          { type: 'context', elements: [{ type: 'mrkdwn', text: `Job ID: ${jobId || '-'} | Exp: ${yearsOfExperience || '-'} yrs | Notice: ${noticePeriod || '-'} | Earliest: ${earliestStartDate || '-'}` }] },
+          { type: 'context', elements: [{ type: 'mrkdwn', text: `Job ID: ${jobId || '-'} | Exp: ${yearsOfExperience || '-'} yrs | Notice: ${noticePeriod || '-'} | Earliest: ${earliestStartDate || '-'} | Consent: ${privacyConsent === 'true' ? 'Yes' : 'No'}` }] },
         ],
       }
       try {

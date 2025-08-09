@@ -31,6 +31,7 @@ function Apply() {
   const [form, setForm] = useState(initialForm)
   const [resumeFile, setResumeFile] = useState(null)
   const [additionalFiles, setAdditionalFiles] = useState([])
+  const [privacyConsent, setPrivacyConsent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -51,13 +52,17 @@ function Apply() {
     if (resumeFile && resumeFile.size > 4 * 1024 * 1024) return 'Resume must be under 4 MB.'
     if (resumeFile && !/\.(pdf|docx?)$/i.test(resumeFile.name)) return 'Resume must be a PDF or DOC/DOCX file.'
     if (additionalFiles.length > 2) return 'You can attach up to 2 additional files.'
+    let totalBytes = resumeFile ? resumeFile.size : 0
     for (const f of additionalFiles) {
-      if (f.size > 4 * 1024 * 1024) return 'Additional files must be under 4 MB.'
+      totalBytes += f.size
+      if (f.size > 4 * 1024 * 1024) return 'Each additional file must be under 4 MB.'
       if (!/\.(pdf|docx?|zip)$/i.test(f.name)) return 'Additional files must be PDF/DOC/DOCX/ZIP.'
     }
+    if (totalBytes > 4 * 1024 * 1024) return 'Total upload size must be under 4 MB.'
     if (!validateUrl(form.linkedInUrl)) return 'LinkedIn URL is not valid.'
     if (!validateUrl(form.githubUrl)) return 'GitHub URL is not valid.'
     if (!validateUrl(form.portfolioUrl)) return 'Portfolio URL is not valid.'
+    if (!privacyConsent) return 'You must agree to the privacy policy to proceed.'
     return ''
   }
 
@@ -75,6 +80,7 @@ function Apply() {
       data.append('role', job ? job.title : '')
       data.append('department', job ? job.department : '')
       Object.entries(form).forEach(([k, v]) => data.append(k, v ?? ''))
+      data.append('privacyConsent', privacyConsent ? 'true' : 'false')
       if (resumeFile) data.append('resume', resumeFile)
       for (const f of additionalFiles) data.append('attachments', f)
 
@@ -90,6 +96,7 @@ function Apply() {
 
       setSuccess('Application submitted successfully! We will get back to you soon.')
       setForm(initialForm)
+      setPrivacyConsent(false)
       setResumeFile(null)
       setAdditionalFiles([])
     } catch (err) {
@@ -287,6 +294,20 @@ function Apply() {
                 className="mt-1 w-full rounded-lg border-gray-300 bg-white"
               />
             </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              id="privacyConsent"
+              type="checkbox"
+              checked={privacyConsent}
+              onChange={e => setPrivacyConsent(e.target.checked)}
+              className="mt-1 h-5 w-5 text-[#1B4B8F] border-gray-300 rounded"
+              required
+            />
+            <label htmlFor="privacyConsent" className="text-sm text-gray-700">
+              I agree to the processing of my information for recruitment purposes and consent to be contacted. I have read and agree to the privacy policy.
+            </label>
           </div>
 
           {error && (
