@@ -188,7 +188,7 @@ function Home() {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
               
-              <button className="glass-card text-white border-2 border-white/20 hover:border-white/40 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-500 hover:bg-white/20 hover-lift focus-2025">
+              <button onClick={() => window.open('https://youtu.be/s4AoBwzuWGw?si=KNG5wzyZiD1cueor', '_blank', 'noopener,noreferrer')} className="glass-card text-white border-2 border-white/20 hover:border-white/40 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-500 hover:bg-white/20 hover-lift focus-2025">
                 Watch Demo
               </button>
             </motion.div>
