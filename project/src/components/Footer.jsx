@@ -54,7 +54,7 @@ function Footer() {
             <motion.img 
               src="/Transparent-logo.png" 
               alt="Vachi Services LLC" 
-              className="h-14 w-auto mb-6 brightness-0 invert"
+              className="h-16 w-auto mb-6 transition-transform duration-300"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             />
