@@ -415,7 +415,7 @@ function Careers() {
                           }
                         </button>
                         <Link
-                          to={`/contact?job=${job.id}`}
+                          to={`/apply?job=${job.id}`}
                           className="block bg-[#4CAF50] hover:bg-[#4CAF50]/90 text-white px-6 py-2 rounded-lg transition-colors duration-300 text-center font-semibold"
                         >
                           Apply Now
@@ -650,7 +650,7 @@ function Careers() {
             variants={fadeInUp}
           >
             <Link
-              to="/contact"
+              to="/apply"
               className="bg-[#4CAF50] hover:bg-[#4CAF50]/90 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               Apply Now

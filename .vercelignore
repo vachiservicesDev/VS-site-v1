@@ -1,0 +1,22 @@
+# Ignore VCS and editor settings
+.git
+.gitignore
+.vscode
+
+# Ignore local dependencies and logs
+node_modules
+project/node_modules
+*.log
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore archives and large binaries
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Explicitly ignore the large zip in the repo root
+vachi group : services.zip
