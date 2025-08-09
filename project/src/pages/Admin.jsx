@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Plus, Trash2, Save, LogOut, Lock, Briefcase } from 'lucide-react'
+import { Plus, Trash2, Save, LogOut, Lock, Briefcase, RefreshCw } from 'lucide-react'
+import { jobs as defaultJobs } from '../data/jobs'
 
 const ADMIN_EMAIL = 'admin@vachiservices.com'
 const ADMIN_PASSWORD = 'PR@vi2517726'
@@ -54,6 +55,30 @@ function Admin() {
       ...prev,
       { id: crypto.randomUUID(), title: '', department: '', location: '', description: '' }
     ])
+  }
+
+  function loadCurrentJobs() {
+    try {
+      const stored = localStorage.getItem('adminJobs')
+      const source = stored ? JSON.parse(stored) : defaultJobs
+      const normalized = (Array.isArray(source) ? source : []).map(j => ({
+        id: crypto.randomUUID(),
+        title: j.title || '',
+        department: j.department || '',
+        location: j.location || '',
+        description: j.description || ''
+      }))
+      setJobs(normalized)
+    } catch {
+      const normalized = defaultJobs.map(j => ({
+        id: crypto.randomUUID(),
+        title: j.title || '',
+        department: j.department || '',
+        location: j.location || '',
+        description: j.description || ''
+      }))
+      setJobs(normalized)
+    }
   }
 
   function updateJob(id, field, value) {
@@ -156,7 +181,10 @@ function Admin() {
         <section className="glass-card p-6 rounded-2xl shadow-2025-medium">
           <h2 className="text-xl font-semibold mb-4">Job Postings</h2>
           <div className="space-y-4">
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
+              <button onClick={loadCurrentJobs} className="inline-flex items-center px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-50">
+                <RefreshCw className="w-4 h-4 mr-2" /> Load Current
+              </button>
               <button onClick={addJob} className="inline-flex items-center px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-50">
                 <Plus className="w-4 h-4 mr-2" /> Add Job
               </button>
@@ -170,7 +198,7 @@ function Admin() {
 
             <div className="space-y-4">
               {jobs.length === 0 && (
-                <p className="text-sm text-gray-500">Using built-in jobs. Add jobs to override.</p>
+                <p className="text-sm text-gray-500">Using built-in jobs. Click "Load Current" to edit/remove existing postings, or "Add Job" to create new ones.</p>
               )}
               {jobs.map(job => (
                 <div key={job.id} className="p-4 rounded-xl border border-gray-200">
