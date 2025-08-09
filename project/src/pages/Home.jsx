@@ -18,6 +18,7 @@ import {
 
 function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [demoUrl, setDemoUrl] = useState('https://youtu.be/s4AoBwzuWGw?si=KNG5wzyZiD1cueor')
 
   const testimonials = [
     {
@@ -79,6 +80,11 @@ function Home() {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 4000)
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const stored = localStorage.getItem('homeDemoUrl')
+    if (stored) setDemoUrl(stored)
   }, [])
 
   const fadeInUp = {
@@ -188,7 +194,7 @@ function Home() {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
               
-              <button onClick={() => window.open('https://youtu.be/s4AoBwzuWGw?si=KNG5wzyZiD1cueor', '_blank', 'noopener,noreferrer')} className="glass-card text-white border-2 border-white/20 hover:border-white/40 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-500 hover:bg-white/20 hover-lift focus-2025">
+              <button onClick={() => window.open(demoUrl, '_blank', 'noopener,noreferrer')} className="glass-card text-white border-2 border-white/20 hover:border-white/40 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-500 hover:bg-white/20 hover-lift focus-2025">
                 Watch Demo
               </button>
             </motion.div>

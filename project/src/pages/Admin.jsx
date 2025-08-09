@@ -13,6 +13,7 @@ function Admin() {
   const [heroTitle, setHeroTitle] = useState('')
   const [heroSubtitle, setHeroSubtitle] = useState('')
   const [jobs, setJobs] = useState([])
+  const [demoUrl, setDemoUrl] = useState('')
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
@@ -27,6 +28,9 @@ function Admin() {
     if (storedJobs) {
       try { setJobs(JSON.parse(storedJobs)) } catch {}
     }
+
+    const storedDemo = localStorage.getItem('homeDemoUrl')
+    if (storedDemo) setDemoUrl(storedDemo)
   }, [])
 
   function handleLogin(e) {
@@ -48,6 +52,21 @@ function Admin() {
     localStorage.setItem('careerTitle', heroTitle)
     localStorage.setItem('careerSubtitle', heroSubtitle)
     alert('Career hero content saved')
+  }
+
+  function saveDemoUrl() {
+    if (!demoUrl || !/^https?:\/\//i.test(demoUrl)) {
+      alert('Please enter a valid URL starting with http or https')
+      return
+    }
+    localStorage.setItem('homeDemoUrl', demoUrl)
+    alert('Demo URL saved')
+  }
+
+  function resetDemoUrl() {
+    localStorage.removeItem('homeDemoUrl')
+    setDemoUrl('')
+    alert('Demo URL reset to default')
   }
 
   function addJob() {
@@ -211,6 +230,30 @@ function Admin() {
         </section>
 
         <section className="glass-card p-6 rounded-2xl shadow-2025-medium">
+          <h2 className="text-xl font-semibold mb-4">Home Page Settings</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Watch Demo URL</label>
+              <input
+                type="url"
+                value={demoUrl}
+                onChange={e => setDemoUrl(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B4B8F]"
+                placeholder="https://youtu.be/..."
+              />
+            </div>
+            <div className="flex gap-3">
+              <button onClick={saveDemoUrl} className="inline-flex items-center gradient-secondary text-white px-4 py-2 rounded-full font-semibold shadow-2025-medium hover:shadow-2025-large">
+                <Save className="w-4 h-4 mr-2" /> Save Demo URL
+              </button>
+              <button onClick={resetDemoUrl} className="inline-flex items-center px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-50">
+                Reset to Default
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="glass-card p-6 rounded-2xl shadow-2025-medium lg:col-span-2">
           <h2 className="text-xl font-semibold mb-4">Job Postings</h2>
           <div className="space-y-4">
             <div className="flex flex-wrap gap-3">
